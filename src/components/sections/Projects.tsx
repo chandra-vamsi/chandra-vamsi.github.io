@@ -76,7 +76,7 @@ export function Projects() {
                     <Link href={project.link} target="_blank" className="flex items-center gap-2 px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors group">
                       <Github className="w-5 h-5 group-hover:scale-110 transition-transform" /> View Source
                     </Link>
-                    <Link href="#" className="flex items-center gap-2 px-8 py-4 bg-white/5 border border-white/10 text-white font-medium rounded-full hover:bg-white/10 transition-colors group">
+                    <Link href="/case-study" className="flex items-center gap-2 px-8 py-4 bg-white/5 border border-white/10 text-white font-medium rounded-full hover:bg-white/10 transition-colors group">
                       <ExternalLink className="w-5 h-5 group-hover:rotate-45 transition-transform" /> Case Study
                     </Link>
                   </div>

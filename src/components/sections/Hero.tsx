@@ -94,7 +94,7 @@ export function Hero() {
                 <Github className="w-4 h-4" />
                 GitHub
               </Link>
-              <Link href="/Chandra_Vamsi_AI A.pdf" target="_blank" className="flex items-center justify-center gap-2 px-8 py-4 bg-white/5 border border-white/10 text-white font-medium rounded-full hover:bg-white/10 transition-colors">
+              <Link href="/resume.pdf" target="_blank" className="flex items-center justify-center gap-2 px-8 py-4 bg-white/5 border border-white/10 text-white font-medium rounded-full hover:bg-white/10 transition-colors">
                 <FileText className="w-4 h-4" />
                 Resume
               </Link>
