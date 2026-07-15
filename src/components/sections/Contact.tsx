@@ -33,9 +33,14 @@ export function Contact() {
               Email Me
               <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
             </Link>
-            <Link href="tel:+917780140364" className="inline-flex items-center gap-3 px-10 py-6 bg-white/5 border border-white/10 text-white text-xl font-bold rounded-full hover:bg-white/10 hover:scale-105 transition-all duration-300 group shadow-[0_0_40px_rgba(255,255,255,0.1)]">
-              +91 7780140364
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform text-white/50" />
+            <Link href="tel:+917780140364" className="group relative overflow-hidden inline-flex items-center justify-center px-10 py-6 bg-white/5 border border-white/10 text-white text-xl font-bold rounded-full hover:bg-white/10 hover:scale-105 transition-all duration-300 shadow-[0_0_40px_rgba(255,255,255,0.1)] w-56 h-[76px]">
+              <div className="absolute inset-0 flex items-center justify-center gap-3 transition-transform duration-500 group-hover:-translate-y-[150%]">
+                Phone
+                <ArrowRight className="w-6 h-6 text-white/50" />
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center gap-2 translate-y-[150%] transition-transform duration-500 group-hover:translate-y-0 text-lg md:text-xl">
+                +91 7780140364
+              </div>
             </Link>
           </div>
         </motion.div>

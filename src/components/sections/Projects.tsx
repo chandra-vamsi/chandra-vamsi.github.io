@@ -8,31 +8,33 @@ export function Projects() {
   const projects = [
     {
       title: "LangChain RAG Assistant",
-      subtitle: "Enterprise-grade Retrieval-Augmented Generation",
-      description: "An intelligent support system that ingests massive enterprise documentation and provides highly accurate, context-aware answers to user queries.",
+      subtitle: "Internal Documentation QA Bot",
+      description: "A helpful support tool that reads through a collection of internal PDFs and manuals to provide quick, context-aware answers to user questions.",
       metrics: [
-        { label: "Latency", value: "< 800ms" },
-        { label: "Accuracy", value: "94%" },
-        { label: "Data Indexed", value: "2M+ Docs" }
+        { label: "Latency", value: "~1s" },
+        { label: "Reliability", value: "High" },
+        { label: "Data Indexed", value: "500+ Docs" }
       ],
-      tech: ["Python", "LangChain", "ChromaDB", "FastAPI"],
-      challenges: "Handling extremely large, unstructured PDF datasets while maintaining rapid query retrieval times and avoiding LLM hallucinations.",
-      solutions: "Implemented a hybrid search approach combining dense vector embeddings with sparse keyword search (BM25), alongside a strict LangChain prompt orchestration pipeline.",
-      link: "https://github.com/chandra-vamsi"
+      tech: ["Python", "LangChain", "ChromaDB", "OpenAI API"],
+      challenges: "The model sometimes hallucinated answers if the vector database returned bad matches, and naive text chunking broke paragraphs in half.",
+      solutions: "Implemented recursive character chunking to keep sentences intact and tweaked the prompt to strictly avoid hallucinations when context is missing.",
+      link: "https://github.com/chandra-vamsi",
+      caseStudy: "/case-studies/rag"
     },
     {
       title: "Crypto Analytics AI",
-      subtitle: "Time-Series Predictive Modeling",
-      description: "Advanced forecasting architecture analyzing real-time cryptocurrency order books and historical price trends to predict short-term volatility.",
+      subtitle: "Cryptocurrency Price Predictor",
+      description: "A time-series forecasting script that analyzes recent cryptocurrency price trends and order book data to guess short-term price movements.",
       metrics: [
         { label: "Model", value: "LSTM Net" },
-        { label: "Data Points", value: "50M+" },
+        { label: "Dataset", value: "Local CSVs" },
         { label: "Window", value: "15 mins" }
       ],
       tech: ["TensorFlow", "Pandas", "Scikit-learn", "REST APIs"],
-      challenges: "Market data contains extreme noise and non-stationary volatility, making traditional ARIMA models ineffective for short-term prediction.",
-      solutions: "Designed a deep LSTM (Long Short-Term Memory) neural network with custom attention layers, fed by a robust real-time data ingestion pipeline via WebSocket APIs.",
-      link: "https://github.com/chandra-vamsi"
+      challenges: "Crypto markets are incredibly noisy, so my initial models were basically just predicting the previous minute's price instead of forecasting.",
+      solutions: "Added moving averages and RSI (Relative Strength Index) features to the dataset before passing it into the neural network to find better signals.",
+      link: "https://github.com/chandra-vamsi",
+      caseStudy: "/case-studies/crypto"
     }
   ];
 
@@ -76,7 +78,7 @@ export function Projects() {
                     <Link href={project.link} target="_blank" className="flex items-center gap-2 px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-colors group">
                       <Github className="w-5 h-5 group-hover:scale-110 transition-transform" /> View Source
                     </Link>
-                    <Link href="/case-study" className="flex items-center gap-2 px-8 py-4 bg-white/5 border border-white/10 text-white font-medium rounded-full hover:bg-white/10 transition-colors group">
+                    <Link href={project.caseStudy} className="flex items-center gap-2 px-8 py-4 bg-white/5 border border-white/10 text-white font-medium rounded-full hover:bg-white/10 transition-colors group">
                       <ExternalLink className="w-5 h-5 group-hover:rotate-45 transition-transform" /> Case Study
                     </Link>
                   </div>
