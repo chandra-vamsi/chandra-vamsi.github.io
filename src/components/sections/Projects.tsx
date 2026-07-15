@@ -19,7 +19,8 @@ export function Projects() {
       challenges: "The model sometimes hallucinated answers if the vector database returned bad matches, and naive text chunking severed important semantic context.",
       solutions: "Implemented recursive character chunking to keep sentences intact and iterated heavily on prompt engineering to strictly avoid hallucinations.",
       link: "https://github.com/chandra-vamsi",
-      caseStudy: "/case-studies/rag"
+      caseStudy: "/case-studies/rag",
+      image: "/rag-visual.png"
     },
     {
       title: "Crypto Analytics AI",
@@ -34,7 +35,8 @@ export function Projects() {
       challenges: "Crypto markets are incredibly volatile, and evaluating baseline models (like ARIMA and Random Forests) showed they couldn't capture the temporal dependencies.",
       solutions: "Containerized the pipeline with Docker, engineered features like RSI, and ultimately deployed a deep LSTM network to capture short-term patterns.",
       link: "https://github.com/chandra-vamsi",
-      caseStudy: "/case-studies/crypto"
+      caseStudy: "/case-studies/crypto",
+      image: "/crypto-visual.png"
     }
   ];
 
@@ -94,7 +96,12 @@ export function Projects() {
                     ))}
                   </div>
 
-                  <div className="p-8 md:p-12 rounded-[2.5rem] bg-white/[0.02] border border-white/5 h-full flex flex-col justify-center hover:border-white/10 transition-colors">
+                  <div className="w-full h-64 md:h-80 relative rounded-[2.5rem] overflow-hidden border border-white/10 group">
+                    <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
+                  </div>
+
+                  <div className="p-8 md:p-12 rounded-[2.5rem] bg-white/[0.02] border border-white/5 flex flex-col justify-center hover:border-white/10 transition-colors">
                     <div className="mb-10">
                       <h3 className="text-xs font-bold tracking-[0.2em] text-white uppercase mb-4">The Challenge</h3>
                       <p className="text-lg md:text-xl text-gray-400 font-light leading-relaxed">{project.challenges}</p>
