@@ -73,29 +73,30 @@ If the user asks about anything completely unrelated (e.g., general knowledge, c
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "llama3-8b-8192",
+          model: "llama-3.1-8b-instant",
           messages: apiMessages,
           temperature: 0.5,
           max_tokens: 256,
         }),
       });
 
+      const data = await response.json();
+      
       if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
+        throw new Error(`API error: ${response.status} - ${data?.error?.message || 'Unknown error'}`);
       }
 
-      const data = await response.json();
       const reply = data.choices[0]?.message?.content || "Sorry, I couldn't process that.";
 
       setMessages((prev) => [
         ...prev,
         { id: (Date.now() + 1).toString(), role: "assistant", content: reply },
       ]);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       setMessages((prev) => [
         ...prev,
-        { id: (Date.now() + 1).toString(), role: "assistant", content: "Sorry, I encountered a network error while trying to reach the Groq API." },
+        { id: (Date.now() + 1).toString(), role: "assistant", content: `API Error: ${error.message}` },
       ]);
     } finally {
       setIsTyping(false);
