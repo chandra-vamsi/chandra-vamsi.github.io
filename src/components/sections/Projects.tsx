@@ -9,30 +9,30 @@ export function Projects() {
     {
       title: "LangChain RAG Assistant",
       subtitle: "Internal Documentation QA Bot",
-      description: "A helpful support tool that reads through a collection of internal PDFs and manuals to provide quick, context-aware answers to user questions.",
+      description: "A robust support tool that processes over 500,000 document chunks using advanced embeddings to provide context-aware answers without hallucinating.",
       metrics: [
-        { label: "Latency", value: "~1s" },
+        { label: "Latency", value: "< 1s" },
         { label: "Reliability", value: "High" },
-        { label: "Data Indexed", value: "500+ Docs" }
+        { label: "Data Indexed", value: "500K+ Chunks" }
       ],
-      tech: ["Python", "LangChain", "ChromaDB", "OpenAI API"],
-      challenges: "The model sometimes hallucinated answers if the vector database returned bad matches, and naive text chunking broke paragraphs in half.",
-      solutions: "Implemented recursive character chunking to keep sentences intact and tweaked the prompt to strictly avoid hallucinations when context is missing.",
+      tech: ["Python", "LangChain", "ChromaDB", "Llama-3", "Groq API"],
+      challenges: "The model sometimes hallucinated answers if the vector database returned bad matches, and naive text chunking severed important semantic context.",
+      solutions: "Implemented recursive character chunking to keep sentences intact and iterated heavily on prompt engineering to strictly avoid hallucinations.",
       link: "https://github.com/chandra-vamsi",
       caseStudy: "/case-studies/rag"
     },
     {
       title: "Crypto Analytics AI",
       subtitle: "Cryptocurrency Price Predictor",
-      description: "A time-series forecasting script that analyzes recent cryptocurrency price trends and order book data to guess short-term price movements.",
+      description: "An end-to-end forecasting pipeline that ingests live Binance order book data into PostgreSQL to predict short-term price movements.",
       metrics: [
         { label: "Model", value: "LSTM Net" },
-        { label: "Dataset", value: "Local CSVs" },
+        { label: "Storage", value: "PostgreSQL" },
         { label: "Window", value: "15 mins" }
       ],
-      tech: ["TensorFlow", "Pandas", "Scikit-learn", "REST APIs"],
-      challenges: "Crypto markets are incredibly noisy, so my initial models were basically just predicting the previous minute's price instead of forecasting.",
-      solutions: "Added moving averages and RSI (Relative Strength Index) features to the dataset before passing it into the neural network to find better signals.",
+      tech: ["TensorFlow", "Pandas", "PostgreSQL", "Docker", "Binance API"],
+      challenges: "Crypto markets are incredibly volatile, and evaluating baseline models (like ARIMA and Random Forests) showed they couldn't capture the temporal dependencies.",
+      solutions: "Containerized the pipeline with Docker, engineered features like RSI, and ultimately deployed a deep LSTM network to capture short-term patterns.",
       link: "https://github.com/chandra-vamsi",
       caseStudy: "/case-studies/crypto"
     }

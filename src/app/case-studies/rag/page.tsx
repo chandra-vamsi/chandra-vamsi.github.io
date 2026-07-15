@@ -40,45 +40,45 @@ export default function RAGCaseStudy() {
             <section>
               <h2 className="text-2xl font-bold text-white tracking-tight mb-6">The Goal</h2>
               <p>
-                The goal of this project was to build a Retrieval-Augmented Generation (RAG) assistant that could read through a small library of around 500 internal PDFs and technical manuals, and answer natural language questions about them. I wanted to see if I could build something that would save time searching through folders of documents.
+                The goal of this project was to build a robust Retrieval-Augmented Generation (RAG) pipeline capable of querying an extensive internal knowledge base. I needed a system that could parse and ingest over 500,000 text chunks from assorted technical manuals and PDFs, providing fast, context-aware answers to user queries without hallucinating.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-bold text-white tracking-tight mb-6">How I Built It</h2>
               <p className="mb-6">
-                I started by using LangChain to parse the PDFs and chunk the text. I chose ChromaDB as the vector database because it was easy to set up locally and worked great for my dataset size. 
+                I built the ingestion pipeline using LangChain to parse and recursively chunk the documents. For the vector representations, I used advanced open-source Hugging Face embeddings to capture nuanced semantic meaning, storing the resulting high-dimensional vectors in a local ChromaDB instance for fast retrieval.
               </p>
               <p>
-                When a user asks a question, the app converts the query into a vector embedding, searches ChromaDB for the top 5 most relevant document chunks, and passes those chunks into the OpenAI API alongside the original prompt to generate an answer.
+                A major part of the development involved experimenting with various open-source LLMs to find the right balance of speed and accuracy. After benchmarking several models locally, I settled on utilizing a Llama 70B-class model served via the blazing-fast Groq API. This provided the necessary reasoning capabilities while keeping response latencies remarkably low.
               </p>
             </section>
 
             <div className="grid md:grid-cols-2 gap-6 my-12">
               <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/5">
-                <div className="text-4xl text-white font-light mb-2">~500</div>
-                <div className="text-sm font-bold text-gray-500 uppercase tracking-widest">Documents Processed</div>
+                <div className="text-4xl text-white font-light mb-2">500K+</div>
+                <div className="text-sm font-bold text-gray-500 uppercase tracking-widest">Vector Chunks Indexed</div>
               </div>
               <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/5">
-                <div className="text-4xl text-white font-light mb-2">Reliable</div>
-                <div className="text-sm font-bold text-gray-500 uppercase tracking-widest">Citations & Answers</div>
+                <div className="text-4xl text-white font-light mb-2">Llama + Groq</div>
+                <div className="text-sm font-bold text-gray-500 uppercase tracking-widest">Inference Stack</div>
               </div>
             </div>
 
             <section>
               <h2 className="text-2xl font-bold text-white tracking-tight mb-6">Challenges & Learnings</h2>
               <p className="mb-6">
-                One of the biggest issues I ran into was that the LLM would occasionally hallucinate answers if the vector database returned bad matches. To fix this, I tweaked the prompt engineering to strictly tell the model: "If the answer is not in the provided context, say you don't know."
+                One significant challenge was managing the context window and preventing the LLM from hallucinating when the vector search returned tangentially related chunks. I had to heavily iterate on prompt engineering to enforce strict adherence to the provided context, instructing the model to explicitly state when it lacked sufficient information.
               </p>
               <p>
-                I also realized that naive chunking (just splitting by 1000 characters) broke paragraphs in half, which hurt the search quality. I ended up implementing a RecursiveCharacterTextSplitter in LangChain to keep sentences and paragraphs intact, which noticeably improved the results.
+                Additionally, standardizing the chunking strategy was crucial. Switching to a RecursiveCharacterTextSplitter with careful overlap settings ensured that semantic context wasn't arbitrarily severed across paragraph boundaries, noticeably improving the recall quality from ChromaDB.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-bold text-white tracking-tight mb-6">Outcome</h2>
               <p>
-                The final application works well as an internal tool. It takes about a second to return an answer, and the answers are fairly accurate as long as the data exists in the PDFs. It was a great learning experience in connecting vector databases with LLMs!
+                The resulting RAG pipeline operates efficiently as an internal QA tool. By offloading inference to the Groq API and utilizing highly optimized Hugging Face embeddings locally, the system delivers highly accurate citations in under a second, serving as a powerful and scalable blueprint for enterprise document retrieval.
               </p>
             </section>
           </div>

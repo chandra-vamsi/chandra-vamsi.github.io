@@ -40,45 +40,45 @@ export default function CryptoCaseStudy() {
             <section>
               <h2 className="text-2xl font-bold text-white tracking-tight mb-6">The Goal</h2>
               <p>
-                I've always been interested in time-series forecasting, so I decided to build a model that attempts to predict short-term cryptocurrency price movements (like Bitcoin and Ethereum) over a 15-minute window. It was mostly a learning exercise to get more comfortable with TensorFlow and handling sequential data.
+                I've always been interested in time-series forecasting, so I set out to build a robust pipeline that could predict short-term cryptocurrency price movements over a 15-minute window. I wanted a production-like setup that handled live data ingestion, storage, and model inference seamlessly.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-bold text-white tracking-tight mb-6">How I Built It</h2>
               <p className="mb-6">
-                I wrote a Python script to fetch historical price data and order book snapshots from public crypto exchange APIs. After cleaning the data with Pandas and scaling it, I built an LSTM (Long Short-Term Memory) neural network in TensorFlow. 
+                I built a data ingestion service using Python that makes direct REST and WebSocket calls to the Binance API to fetch real-time order book snapshots and historical k-line data. To ensure data persistence and reliable querying, the ingested data was cleaned with Pandas and stored directly into a PostgreSQL database.
               </p>
               <p>
-                LSTMs are great for this kind of data because they can "remember" patterns from previous time steps. I trained the model on a few months of historical minute-by-minute data to predict whether the price would go up or down in the next 15 minutes.
+                To keep the architecture clean and portable, the entire stack—including the database, data fetcher, and inference engine—was containerized using Docker. For the modeling phase, I benchmarked several machine learning algorithms including Random Forests, ARIMA, and Gradient Boosting before finding that a deep LSTM (Long Short-Term Memory) neural network in TensorFlow performed the best on this sequential data.
               </p>
             </section>
 
             <div className="grid md:grid-cols-2 gap-6 my-12">
               <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/5">
-                <div className="text-4xl text-white font-light mb-2">LSTM</div>
-                <div className="text-sm font-bold text-gray-500 uppercase tracking-widest">Model Architecture</div>
+                <div className="text-4xl text-white font-light mb-2">Docker + Postgres</div>
+                <div className="text-sm font-bold text-gray-500 uppercase tracking-widest">Data Pipeline Stack</div>
               </div>
               <div className="p-8 rounded-3xl bg-white/[0.03] border border-white/5">
-                <div className="text-4xl text-white font-light mb-2">Python</div>
-                <div className="text-sm font-bold text-gray-500 uppercase tracking-widest">Data Pipeline</div>
+                <div className="text-4xl text-white font-light mb-2">LSTM Network</div>
+                <div className="text-sm font-bold text-gray-500 uppercase tracking-widest">Winning Algorithm</div>
               </div>
             </div>
 
             <section>
               <h2 className="text-2xl font-bold text-white tracking-tight mb-6">Challenges & Learnings</h2>
               <p className="mb-6">
-                The hardest part was definitely the data noise. Crypto markets are extremely volatile, and my initial models were basically just predicting the previous minute's price instead of actually forecasting. 
+                The hardest part was definitely the data noise. Crypto markets are extremely volatile, and my initial baseline models were basically just predicting the previous minute's price instead of actually forecasting. Evaluating different algorithms proved that simple linear models couldn't capture the temporal dependencies.
               </p>
               <p>
-                To improve it, I learned how to engineer better features—like adding moving averages and RSI (Relative Strength Index) to the dataset before passing it into the neural network. This helped the model pick up on slightly better signals instead of just guessing randomly.
+                To improve the LSTM's performance, I learned how to engineer better features—like adding moving averages and RSI (Relative Strength Index) to the dataset before passing it into the neural network. This helped the model pick up on slightly better signals instead of just guessing randomly.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-bold text-white tracking-tight mb-6">Outcome</h2>
               <p>
-                While the model isn't going to make me a millionaire (it gets it right a bit better than a coin flip), building it taught me a huge amount about data preprocessing, time-series analysis, and designing deep learning models in TensorFlow.
+                While the model isn't going to make me a millionaire, building this end-to-end pipeline was an incredible learning experience. I gained practical skills in orchestrating microservices with Docker, managing time-series data in PostgreSQL, integrating with the Binance API, and designing deep learning models in TensorFlow.
               </p>
             </section>
           </div>
