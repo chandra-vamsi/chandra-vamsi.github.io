@@ -31,47 +31,75 @@ export function Chatbot() {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const generateResponse = (query: string) => {
-    const q = query.toLowerCase();
-    if (q.includes("skill") || q.includes("tech") || q.includes("stack")) {
-      return "Chandra specializes in AI Engineering, focusing on Python, TensorFlow, LangChain, PostgreSQL, and building RAG pipelines. He's also great with React and Next.js for full-stack apps!";
-    }
-    if (q.includes("rag") || q.includes("langchain")) {
-      return "His LangChain RAG Assistant is an internal QA bot that processes over 500,000 document chunks using advanced Hugging Face embeddings and Llama-3 via the Groq API. It answers queries in under a second!";
-    }
-    if (q.includes("crypto") || q.includes("lstm") || q.includes("predict")) {
-      return "His Crypto Analytics AI ingests live Binance order book data into PostgreSQL and uses a deep LSTM neural network in TensorFlow to predict short-term price movements.";
-    }
-    if (q.includes("experience") || q.includes("work") || q.includes("job")) {
-      return "Chandra is an AI Engineer and Python developer who thrives on solving hard problems, from orchestrating LLMs to optimizing deep learning models for time-series forecasting.";
-    }
-    if (q.includes("contact") || q.includes("email") || q.includes("hire")) {
-      return "You can reach Chandra directly at chandravamsi.t@gmail.com or call him at +91 7780140364. He'd love to chat!";
-    }
-    if (q.includes("github") || q.includes("repo")) {
-      return "You can check out his source code on GitHub at https://github.com/chandra-vamsi !";
-    }
-    
-    return "That's an interesting question! I'm just a simulated AI, so my knowledge is limited to Chandra's portfolio. Try asking about his skills, projects, or how to contact him.";
-  };
+  const SYSTEM_PROMPT = `
+You are Chandra Vamsi's AI assistant. Your ONLY job is to answer questions about his portfolio, skills, experience, and contact information. 
+Chandra is an AI Engineer and Python developer specializing in RAG, Generative AI, and Time-Series Forecasting.
+He knows Python, TensorFlow, LangChain, React, Next.js, Docker, PostgreSQL, and FastAPI.
+His email is chandravamsi.t@gmail.com and phone is +91 7780140364.
+If the user asks about anything completely unrelated (e.g., general knowledge, coding help, recipes), politely decline and steer them back to Chandra's portfolio. Keep your answers brief, friendly, and professional.
+`;
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
 
     const userMessage = { id: Date.now().toString(), role: "user" as const, content: input.trim() };
-    setMessages((prev) => [...prev, userMessage]);
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
     setInput("");
     setIsTyping(true);
 
-    // Simulate network delay
-    setTimeout(() => {
-      const responseContent = generateResponse(userMessage.content);
+    const apiKey = process.env.NEXT_PUBLIC_GROQ_API_KEY;
+    
+    if (!apiKey) {
       setMessages((prev) => [
         ...prev,
-        { id: (Date.now() + 1).toString(), role: "assistant", content: responseContent },
+        { id: (Date.now() + 1).toString(), role: "assistant", content: "Error: NEXT_PUBLIC_GROQ_API_KEY is not set. Please provide an API key." },
       ]);
       setIsTyping(false);
-    }, 1000 + Math.random() * 1000);
+      return;
+    }
+
+    try {
+      // Map messages for the API (exclude id, include system prompt)
+      const apiMessages = [
+        { role: "system", content: SYSTEM_PROMPT },
+        ...newMessages.map(msg => ({ role: msg.role, content: msg.content }))
+      ];
+
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "llama3-8b-8192",
+          messages: apiMessages,
+          temperature: 0.5,
+          max_tokens: 256,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const reply = data.choices[0]?.message?.content || "Sorry, I couldn't process that.";
+
+      setMessages((prev) => [
+        ...prev,
+        { id: (Date.now() + 1).toString(), role: "assistant", content: reply },
+      ]);
+    } catch (error) {
+      console.error(error);
+      setMessages((prev) => [
+        ...prev,
+        { id: (Date.now() + 1).toString(), role: "assistant", content: "Sorry, I encountered a network error while trying to reach the Groq API." },
+      ]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   return (
