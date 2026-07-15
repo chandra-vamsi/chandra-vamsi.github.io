@@ -6,8 +6,31 @@ import { ThemeProvider } from '@/components/theme-provider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Chandra Vamsi Telugu | AI Engineer',
-  description: 'Portfolio of Chandra Vamsi Telugu, AI Engineer specializing in Python, Machine Learning, RAG, LangChain and Generative AI.',
+  metadataBase: new URL('https://chandra-vamsi.github.io'),
+  title: 'Chandra Vamsi | AI Engineer',
+  description: 'Portfolio of Chandra Vamsi, AI Engineer specializing in Python, Machine Learning, RAG, LangChain and Generative AI.',
+  openGraph: {
+    title: 'Chandra Vamsi | AI Engineer',
+    description: 'Transforming complex data into fast, reliable insights using LLMs, RAG, and Deep Learning.',
+    url: 'https://chandra-vamsi.github.io',
+    siteName: 'Chandra Vamsi Portfolio',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Chandra Vamsi AI Engineering Portfolio',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Chandra Vamsi | AI Engineer',
+    description: 'Portfolio of Chandra Vamsi, AI Engineer specializing in Python, Machine Learning, RAG, LangChain and Generative AI.',
+    images: ['/og-image.png'],
+  },
 };
 
 export default function RootLayout({

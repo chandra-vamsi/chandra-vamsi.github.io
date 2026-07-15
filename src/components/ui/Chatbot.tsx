@@ -171,6 +171,34 @@ If the user asks about anything completely unrelated (e.g., general knowledge, c
             </div>
 
             <div className="p-4 border-t border-white/10 bg-white/[0.02]">
+              {/* Quick Actions */}
+              <div className="flex gap-2 mb-3 overflow-x-auto pb-1 scrollbar-hide">
+                <button
+                  onClick={() => window.open("/resume.pdf", "_blank")}
+                  className="whitespace-nowrap px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+                >
+                  📄 Download Resume
+                </button>
+                <button
+                  onClick={() => {
+                    setInput("Can I see your GitHub?");
+                    setTimeout(() => document.getElementById("chat-send-btn")?.click(), 50);
+                  }}
+                  className="whitespace-nowrap px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+                >
+                  💻 View GitHub
+                </button>
+                <button
+                  onClick={() => {
+                    setInput("What are your core AI skills?");
+                    setTimeout(() => document.getElementById("chat-send-btn")?.click(), 50);
+                  }}
+                  className="whitespace-nowrap px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+                >
+                  🧠 AI Skills
+                </button>
+              </div>
+
               <div className="relative">
                 <input
                   type="text"
@@ -181,6 +209,7 @@ If the user asks about anything completely unrelated (e.g., general knowledge, c
                   className="w-full bg-white/5 border border-white/10 rounded-full py-3 pl-4 pr-12 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
                 />
                 <button
+                  id="chat-send-btn"
                   onClick={handleSend}
                   disabled={!input.trim() || isTyping}
                   className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-white text-black rounded-full hover:bg-gray-200 disabled:opacity-50 transition-colors"
