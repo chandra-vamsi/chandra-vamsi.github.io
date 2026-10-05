@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export function About() {
   const narrative = [
-    { text: "3+ Years Experience", highlight: true, badge: "Tenure" },
+    { text: "2+ Years Experience", highlight: true, badge: "Tenure" },
     { text: "Production AI Systems", highlight: true, badge: "Focus" },
     { text: "Python", highlight: false, badge: "Core" },
     { text: "Generative AI", highlight: true, badge: "Expertise" },
