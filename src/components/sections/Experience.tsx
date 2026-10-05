@@ -40,7 +40,7 @@ export function Experience() {
               className="flex flex-col md:flex-row justify-between py-6 md:py-12"
             >
               <div className="md:w-1/3 mb-12 md:mb-0">
-                <span className="inline-block px-4 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-300 text-xs font-bold uppercase tracking-[0.2em] mb-4">June 2023 — Present</span>
+                <span className="inline-block px-4 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-300 text-xs font-bold uppercase tracking-[0.2em] mb-4">September 2024 — Present</span>
                 <h3 className="text-4xl md:text-6xl font-extrabold mt-2 text-white tracking-tight drop-shadow-[0_5px_15px_rgba(0,0,0,0.8)]">Envibe Software</h3>
                 <p className="text-2xl text-cyan-400 mt-2 font-medium">AI Engineer</p>
               </div>
